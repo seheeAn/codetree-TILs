@@ -64,30 +64,27 @@ def move_people():
 # 좌상단 r -> c가 작은게 우선순위
 def find_square():
     global out, sr, sc, square_size
-    square_size = N
-    select_r, select_c = N,N
-    for p in range(M):
-        if people[p] == out:
-            continue
-        pr, pc = people[p]
-        outr, outc = out
-        length = max(abs(outr-pr), abs(outc-pc)) + 1
-        if square_size > length:
-            square_size = length
-            select_r, select_c = pr, pc
-        elif square_size == length:
-            if select_r > pr:
-                select_r, select_c = pr, pc
-            elif select_r == pr and select_c < pc:
-                select_c = pc
+    outr, outc = out
+    #왼쪽 좌상단 부터 사각형 하나씩 만들기
 
-    # 정사각형 좌상단 구하기
-    sr, sc = min(select_r, outr), min(select_c, outc)
-    bottom_right_r, bottom_right_c = max(select_r, outr), max(select_c, outc)
-    remain_r = square_size - (bottom_right_r - sr) -1
-    remain_c = square_size - (bottom_right_c - sc) -1
-    sr = max(1, sr-remain_r)
-    sc = max(1, sc-remain_c)
+    for size in range(2, N):
+        for i in range(1, N+1 - size+1):
+            for j in range(1, N+1 - size+1):
+                r1, r2, c1, c2 = i, i+size-1, j, j+size-1
+                if not(r1<=outr<=r2 and c1<=outc<=c2):
+                    continue
+
+                is_people_in_square = False
+                for p in people:
+                    pr, pc = p
+                    if (r1<=pr<=r2 and c1<=pc<=c2) and not(pr==outr and pc == outc):
+                        is_people_in_square = True
+                        break
+
+                if is_people_in_square == True:
+                    sr, sc = r1, c1
+                    square_size = size
+                    return
 
 # 회전
 # 선택된 정사각형은 시계 방향 90도 회전, 내구도 -1
