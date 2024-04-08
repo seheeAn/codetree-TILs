@@ -122,9 +122,9 @@ def laiser_attack():
             else:
                 inside_attack.append([_r,_c])
                 maps[_r][_c] -= at_power//2
-            _r, _c = route[_r][_c]
             if maps[_r][_c] <= 0:
                 broke_num += 1
+            _r, _c = route[_r][_c]
     return is_reach
 
 # 3-2. 포탄 공격
@@ -172,6 +172,7 @@ def finish_turn():
                 maps[i][j] += 1
 
 for k in range(K):
+    # print(k, broke_num)
     inside_attack = [] #초기화 ... 아 제발 좀...;;;;
     attacker = [10, 10, 10000]
     reciever = [-1, -1, 0]
@@ -183,14 +184,15 @@ for k in range(K):
     row,col,point = attacker
     maps[row][col] = point
     last_attack[row][col] = k
-
+    # print(maps)
     find_reciever()
+    # print(attacker,reciever)
     is_reach = laiser_attack()
     if not is_reach:
         bomb_attack()
-
+    # print(maps)
     finish_turn()
-
+    # print(maps)
 
 answer = 0
 for i in range(N):
