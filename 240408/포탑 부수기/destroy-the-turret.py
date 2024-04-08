@@ -51,9 +51,13 @@ def find_attacker():
 # 공격력이 가장 높음 -> 공격한지 가장 오래됨 -> 행과 열의 합이 가장 작음 -> 열 값이 가장 작음
 def find_reciever():
     global reciever, inside_attack
+    at_row, at_col, at_point = attacker
     row, col, point = reciever
     for i in range(N):
         for j in range(M):
+            if i == at_row and j == at_col:
+                continue
+
             if point < maps[i][j]:
                 point = maps[i][j]
                 row, col = i, j
@@ -170,7 +174,6 @@ def finish_turn():
 
 for k in range(K):
     inside_attack = [] #초기화
-
     if broke_num == N*M-1: # 하나 남으면 게임 종료
         break
 
@@ -178,11 +181,14 @@ for k in range(K):
     row,col,point = attacker
     maps[row][col] = point
     last_attack[row][col] = k
+
     find_reciever()
     is_reach = laiser_attack()
     if not is_reach:
         bomb_attack()
+
     finish_turn()
+
 
 answer = 0
 for i in range(N):
