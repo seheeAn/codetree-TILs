@@ -57,7 +57,6 @@ def find_reciever():
         for j in range(M):
             if i == at_row and j == at_col:
                 continue
-
             if point < maps[i][j]:
                 point = maps[i][j]
                 row, col = i, j
@@ -112,7 +111,7 @@ def laiser_attack():
                 visit[nr][nc] = 1
                 que.append([nr,nc])
 
-    if is_reach == True:
+    if is_reach:
         _r, _c = re_r, re_c
         while True:
             if _r == at_r and _c == at_c:
@@ -173,7 +172,10 @@ def finish_turn():
                 maps[i][j] += 1
 
 for k in range(K):
-    inside_attack = [] #초기화
+    inside_attack = [] #초기화 ... 아 제발 좀...;;;;
+    attacker = [10, 10, 10000]
+    reciever = [-1, -1, 0]
+
     if broke_num == N*M-1: # 하나 남으면 게임 종료
         break
 
