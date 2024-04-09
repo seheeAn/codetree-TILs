@@ -60,6 +60,8 @@ def people_move():
 
             while queue:
                 curr_r, curr_c, route = queue.pop(0)
+                if route >= min_route:
+                    break
                 if curr_r==er and curr_c==ec:
                     if min_route > route: # 최단거리면
                         min_route = route
