@@ -50,7 +50,7 @@ def people_move():
             if r == er and c == ec: # 한칸 이동했더니 도착지
                 people[idx] = [r,c,1]
                 finish += 1
-                continue
+                break
 
             visit = [[0 for _ in range(N+1)] for _ in range(N+1)]
             queue = list()
