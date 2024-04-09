@@ -124,14 +124,17 @@ time = 1
 while True:
     # print(time)
     people_move()
+    check_maps()
     if time <= M:
         go_basecamp(time)
-    check_maps()
     if finish == M:
         break
     # print(maps)
     # print(people)
     # print(end)
     time += 1
+
+    # if time == 10:
+    #     break
 
 print(time)
