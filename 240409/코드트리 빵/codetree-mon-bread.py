@@ -1,11 +1,6 @@
 # 1~m 사람들이 각각 1~m분에 출발 -> 목표 지점이 전부 다름
 # n*n 격자
-
-# 2. 편의점에 도착했다면 멈추고, 다른 사람들은 해당 편의점 칸을 못지나감. (다음 턴부터)
-# 3. 현재 시간이 t분이면 t번 사람은 목적지 편의점과 가장 가까운 베이스캠프에 들어감 (행->열이 작으면 우선순위) 시간 소요 x
-#   -> 이 시점 부터는 다른 사람들은 해당 베이스 캠프를 못지나감. (다음턴부터)
-# 4. 총 몇 분 후에 모두 편의점에 도착하는 지
-# 추가사항: 한 칸에 두명이상 가능. 도달 못하는 경우는 없음, 좌표는 1*1부터 시작
+# 한 칸에 두명이상 가능. 도달 못하는 경우는 없음, 좌표는 1*1부터 시작
 
 # 입력
 N, M = map(int, input().split())
@@ -73,8 +68,16 @@ def people_move():
                     if maps[nr][nc] == 0 and visit[nr][nc] == 0:
                         queue.append([nr,nc,route+1])
                         visit[nr][nc] = 1
-            # print(min_route)
-# 2. 현재 시간이 t분이면 t번 사람은 목적지 편의점과 가장 가까운 베이스캠프에 들어감 (행->열이 작으면 우선순위)
+
+# 2. 갈 수 없는 곳 갱신 (maps)
+def check_maps():
+    global maps
+    for idx in range(M+1):
+        pr, pc, state = people[idx]
+        if state == 1:
+            maps[pr][pc] = idx
+
+# 3. 현재 시간이 t분이면 t번 사람은 목적지 편의점과 가장 가까운 베이스캠프에 들어감 (행->열이 작으면 우선순위)
 def go_basecamp(t):
     global people, maps
     er, ec = end[t]
@@ -110,31 +113,16 @@ def go_basecamp(t):
     maps[min_r][min_c] = t
     people[t] = [min_r,min_c,0]
 
-# 3. 갈 수 없는 곳 갱신 (maps)
-def check_maps():
-    global maps
-    for idx in range(M+1):
-        pr, pc, state = people[idx]
-        if state == 1:
-            maps[pr][pc] = idx
-
 # 4. 모두 도착했다면 종료
 
 time = 1
 while True:
-    # print(time)
     people_move()
     check_maps()
     if time <= M:
         go_basecamp(time)
     if finish == M:
         break
-    # print(maps)
-    # print(people)
-    # print(end)
     time += 1
-
-    # if time == 10:
-    #     break
 
 print(time)
