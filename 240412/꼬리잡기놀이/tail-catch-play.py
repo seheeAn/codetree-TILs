@@ -79,7 +79,7 @@ def ball(turn): #0~k-1
                 return i,turn
     elif 2*n<=turn<3*n:
         turn -= 2*n
-        for i in range(n-1, 1, -1):
+        for i in range(n-1, -1, -1):
             if maps[n-turn-1][i] in [1,2,3]:
                 return n-turn-1, i
     elif 3*n <= turn <4*n:
@@ -102,22 +102,19 @@ def score(row,col):
         r,c,k = queue.pop(0)
         if maps[r][c] == 1:
             answer += k**2
-            maps[r][c] = 3
             hr,hc = r,c
-
         elif maps[r][c] == 3:
-            maps[r][c] = 1
             tr,tc = r,c
 
         for i in range(4):
             nr, nc = r+dr[i], c+dc[i]
             if not(0<=nr<n and 0<=nc<n):
                 continue
-
             if visit[nr][nc] == 1:
                 continue
-
             if maps[r][c] == 1 and maps[nr][nc] != 2:
+                continue
+            if maps[r][c] == 3 and maps[nr][nc] != 2:
                 continue
 
             if maps[nr][nc] in [1,2,3]:
@@ -128,11 +125,12 @@ def score(row,col):
     for idx in range(m):
         if team_info[idx] == [hr,hc]:
             team_info[idx] = [tr,tc]
+            maps[tr][tc] = 1
+            maps[hr][hc] = 3
 
 for round in range(k):
     move()
     row,col = ball(round)
     if [row,col] != [-1,-1]:
         score(row,col)
-
 print(answer)
