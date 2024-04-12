@@ -44,7 +44,7 @@ def move():
         while queue:
             r, c = queue.pop(0)
             if maps[r][c] == 3:
-                maps[r][c] = 0
+                maps[r][c] = 4
                 break
 
             for i in range(4):
