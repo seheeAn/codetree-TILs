@@ -97,9 +97,8 @@ def score(row,col):
             answer += k**2
             maps[r][c] = 3
             hr,hc = r,c
-            continue
 
-        if maps[r][c] == 3:
+        elif maps[r][c] == 3:
             maps[r][c] = 1
             tr,tc = r,c
 
