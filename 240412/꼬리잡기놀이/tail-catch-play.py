@@ -28,6 +28,7 @@ def move():
         hr,hc = team_info[idx]
         queue = []
         visit = [[0 for _ in range(n)] for _ in range(n)]
+        is_circular=False
         for i in range(4):
             nhr,nhc = hr+dr[i], hc+dc[i]
             if not(0<=nhr<n and 0<=nhc<n):
@@ -35,16 +36,22 @@ def move():
             if maps[nhr][nhc] == 4: #머리 변경
                 maps[nhr][nhc] = 1
                 team_info[idx] = [nhr,nhc]
-            elif maps[nhr][nhc] == 2 or maps[nhr][nhc]==3: # 꼬리 찾기
+            elif maps[nhr][nhc] == 2: # 2부터 넣기
                 queue.append([nhr, nhc])
                 maps[hr][hc] = maps[nhr][nhc]
                 visit[nhr][nhc] = 1
                 visit[hr][hc] = 1
+            elif maps[nhr][nhc] == 3:
+                is_circular = True
 
         while queue:
             r, c = queue.pop(0)
             if maps[r][c] == 3:
-                maps[r][c] = 4
+                if is_circular:
+                    maps[r][c] = 1
+                    team_info[idx] = [r,c]
+                else:
+                    maps[r][c] = 4
                 break
 
             for i in range(4):
@@ -82,7 +89,7 @@ def ball(turn): #0~k-1
                 return i, n-turn-1
     return -1,-1
 
-# 3. 점수얻고 방향 전환
+# 3. 점수 얻고 방향 전환
 def score(row,col):
     global answer, maps, team_info
     queue =list()
@@ -108,6 +115,9 @@ def score(row,col):
                 continue
 
             if visit[nr][nc] == 1:
+                continue
+
+            if maps[r][c] == 1 and maps[nr][nc] != 2:
                 continue
 
             if maps[nr][nc] in [1,2,3]:
