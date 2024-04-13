@@ -41,9 +41,11 @@ can_move = True
 def move(idx, d):
     global move_idx, can_move, knights
     sr,sc,er,ec,k = knights[idx]
+
     if k<=0: #죽었음
         can_move=False
         return
+
     nsr, nsc = sr+dr[d], sc+dc[d]
     ner, nec = er+dr[d], ec+dc[d]
     queue = deque()
@@ -67,7 +69,7 @@ def move(idx, d):
             xr,xc,xrr,xcc,xk = knights[n]
             if xk <= 0:
                 continue
-            if (xr<=r<=xrr or xr<=rr<=xrr) and (xc<=c<=xcc or xc<=cc<=xcc):
+            if (xr<=r<=xrr or xr<=rr<=xrr) or (xc<=c<=xcc or xc<=cc<=xcc):
                 queue.append([xr+dr[d],xc+dc[d],xrr+dr[d],xcc+dc[d]])
                 visit[n] = 1
                 move_idx.append(n)
@@ -108,6 +110,6 @@ for i in range(1,Q+1):
 answer = 0
 for i in range(1,N+1):
     if knights[i][-1] > 0:
-        answer += max_k[i]-knights[i][-1]
+        answer += (max_k[i]-knights[i][-1])
 
 print(answer)
