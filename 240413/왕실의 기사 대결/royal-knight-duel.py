@@ -67,7 +67,7 @@ def move(idx, d):
             if xk <= 0:
                 continue
             if (xr<=r<=xrr or xr<=rr<=xrr) and (xc<=c<=xcc or xc<=cc<=xcc):
-                queue.append([xr+dr[d],xc+dr[d],xrr+dr[d],xcc+dr[d]])
+                queue.append([xr+dr[d],xc+dc[d],xrr+dr[d],xcc+dc[d]])
                 visit[n] = 1
                 move_idx.append(n)
 
@@ -101,6 +101,8 @@ for i in range(1,Q+1):
     move(idx,d)
     if can_move:
         fight()
+    # print(idx, d)
+    # print(knights)
 
 answer = 0
 for i in range(1,N+1):
