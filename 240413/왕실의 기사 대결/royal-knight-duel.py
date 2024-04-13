@@ -42,6 +42,7 @@ def move(idx, d):
     global move_idx, can_move, knights
     sr,sc,er,ec,k = knights[idx]
     if k<=0: #죽었음
+        can_move=False
         return
     nsr, nsc = sr+dr[d], sc+dc[d]
     ner, nec = er+dr[d], ec+dc[d]
