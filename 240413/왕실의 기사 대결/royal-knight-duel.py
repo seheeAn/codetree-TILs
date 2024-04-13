@@ -69,10 +69,14 @@ def move(idx, d):
             xr,xc,xrr,xcc,xk = knights[n]
             if xk <= 0:
                 continue
-            if (xr<=r<=xrr or xr<=rr<=xrr) and (xc<=c<=xcc or xc<=cc<=xcc):
-                queue.append([xr+dr[d],xc+dc[d],xrr+dr[d],xcc+dc[d]])
-                visit[n] = 1
-                move_idx.append(n)
+            if (r > xrr or rr < xr ):
+                continue
+            if (c > xcc or cc < xcc):
+                continue
+            
+            queue.append([xr+dr[d],xc+dc[d],xrr+dr[d],xcc+dc[d]])
+            visit[n] = 1
+            move_idx.append(n)
 
     if can_move:
         for m in move_idx:
