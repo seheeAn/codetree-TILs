@@ -71,7 +71,7 @@ def move(idx, d):
                 continue
             if (r > xrr or rr < xr ):
                 continue
-            if (c > xcc or cc < xcc):
+            if (c > xcc or cc < xc):
                 continue
             
             queue.append([xr+dr[d],xc+dc[d],xrr+dr[d],xcc+dc[d]])
