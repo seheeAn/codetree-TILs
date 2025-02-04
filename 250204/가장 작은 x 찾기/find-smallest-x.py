@@ -9,7 +9,8 @@ for i in range(1, 10):
     num = i
 
     for j in range(n):
-        if num * 2**(j+1) >= a[j] and num *2**(j+1) <= b[j]:
+        num *= 2
+        if num >= a[j] and num <= b[j]:
             flag = True
         else:
             flag = False
