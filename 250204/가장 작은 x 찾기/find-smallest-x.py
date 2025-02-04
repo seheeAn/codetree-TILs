@@ -4,7 +4,7 @@ a, b = zip(*ranges)
 a, b = list(a), list(b)
 
 # Write your code here!
-for i in range(1, 10):
+for i in range(1, 100001):
     flag = False
     num = i
 
