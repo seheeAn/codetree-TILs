@@ -9,7 +9,6 @@ for s in str:
         li.append(s)
     elif s == ")":
         if len(li) == 0:
-            print("No")
             flag = False
             break
         li.pop(0)
